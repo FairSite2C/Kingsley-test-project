@@ -1,24 +1,50 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+﻿
+<h1>Kingsley Test Assignment For Neal Lowrey</h1>
+<h4>(404) 514-3668</h4>
+<h4>lowrey.neal@gmail.com</h4>
+
+<textarea id="quote" style="width:900px;min-width:900px;height:450px">
+     "Far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the Galaxy lies a small unregarded yellow sun. Orbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue green planet whose ape-descended life  are so amazingly primitive that they still think digital watches are a pretty neat idea"  
+</textarea>
+<input type="button" id="btnClear" value="clear" onclick="clearQuote()"/>
+<input type="button" id="btnParser" value="submit" onclick="parseQuote()" />
+<div id="results"></div>
+<script>
+    function clearQuote() {
+        //extra feature, no charge!
+        document.getElementById("quote").textContent = "";
+    }
+
+    function parseQuote() {
+
+        var quote = "quote=" + document.getElementById("quote").textContent;
+
+
+        $.post("/Kingsley/ParseQuote/", quote )
+            .done(function (data) {
+               //associative  arrays are evil trying to get a count 
+               var uniqueCount = 0;
+               var  outVal = '<br/><table>';
+               for (var key in data.SortedCount) {
+                   uniqueCount++;
+                    outVal += '<tr><td>' + key + '</td><td>' + data.SortedCount[key] + '</td></tr>';
+                }
+                outVal += '</table>';
+
+                outVal = "Total Words " + data.totalWords + " Total Unique words " + uniqueCount + outVal;
+                // I counted by hand, only 60 words!
+
+                $('#results').html(outVal);
+
+                //total fail on quote, I would of guessed Robert Heinlein or H.Beam Piper, they have humor too.
+        });
+ 
+    }
+
+    function gov() {
+
+        
+    }
+
+</script>
+
